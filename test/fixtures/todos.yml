@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyString
+  completed_flg: false
+  delete_flg: false
+
+two:
+  content: MyString
+  completed_flg: false
+  delete_flg: false
