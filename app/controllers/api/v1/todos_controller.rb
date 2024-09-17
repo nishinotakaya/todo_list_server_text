@@ -2,7 +2,7 @@ class Api::V1::TodosController < ApplicationController
   before_action :set_todo, only: [:update, :destroy]
 
   def index
-    @todos = Todo.all
+    @todos = Todo.order(:sort)
     render json: @todos
   end
 
@@ -35,6 +35,6 @@ class Api::V1::TodosController < ApplicationController
   end
 
   def todo_params
-    params.require(:todo).permit(:content, :completed_flg, :delete_flg)
+    params.require(:todo).permit(:content, :completed_flg, :delete_flg, :sort)
   end
 end
