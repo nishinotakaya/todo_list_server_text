@@ -9,7 +9,7 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     ports:
-      - 3338:3306
+      - 3355:3306
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
   api:
@@ -18,8 +18,8 @@ services:
       dockerfile: Dockerfile
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
-      - .:/myapp  # ホストのカレントディレクトリをコンテナの /rails にマウント
-      - ./vendor/bundle:/rails/vendor/bundle  # bundler のキャッシュを共有
+      - .:/myapp
+      - ./vendor/bundle:/rails/vendor/bundle
     environment:
       TZ: Asia/Tokyo
       RAILS_ENV: development
@@ -27,7 +27,6 @@ services:
       - "3031:3000"
     depends_on:
       - db
-
 
 volumes:
   mysql-data:
