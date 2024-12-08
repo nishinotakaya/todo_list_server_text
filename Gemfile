@@ -4,13 +4,14 @@ source "https://rubygems.org"
 ruby "3.0.3"
 
 
+gem 'devise'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.4"
-
 
 # Use mysql as the database for Active Record
 gem "mysql2", "~> 0.5"
 
+gem 'rack-cors'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -46,6 +47,8 @@ gem "bootsnap", require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 gem "rack-cors"
 
+gem "pg", "~> 1.1", group: :production
+
 
 group :development, :test do
   gem "pry"
@@ -57,4 +60,8 @@ end
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+  gem 'letter_opener'
+  gem 'letter_opener_web'
 end
+
+gem "dockerfile-rails", ">= 1.6", :group => :development
