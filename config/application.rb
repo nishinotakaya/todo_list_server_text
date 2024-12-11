@@ -30,11 +30,24 @@ module Myapp
     config.api_only = true
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins '*'
+        if Rails.env.development?
+          origins 'http://localhost:5173'  # 開発環境では全て許可
+        else
+          origins ENV.fetch('ALLOWED_ORIGINS', '').split(',')
+        end
+    
         resource '*',
           headers: :any,
-          methods: [:get, :post, :put, :patch, :delete, :options, :head]
+          methods: [:get, :post, :put, :patch, :delete, :options, :head],
+          expose: ['access-token', 'expiry', 'token-type', 'uid', 'client'],  # 認証ヘッダーを公開
+          credentials: true,
+          max_age: 86400  # プリフライトリクエストのキャッシュ時間（24時間）
       end
     end
+
+     # APIモードでセッションを有効にする
+    config.session_store :cookie_store, key: '_interslice_session'
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use config.session_store, config.session_options
   end
 end

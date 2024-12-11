@@ -100,6 +100,10 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise_token_auth (1.2.4)
+      bcrypt (~> 3.0)
+      devise (> 3.5.2, < 5)
+      rails (>= 4.2.0, < 7.3)
     dockerfile-rails (1.6.24)
       rails (>= 3.0.0)
     drb (2.2.1)
@@ -155,6 +159,7 @@ GEM
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    pg (1.5.9)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -237,10 +242,12 @@ DEPENDENCIES
   bootsnap
   debug
   devise
+  devise_token_auth
   dockerfile-rails (>= 1.6)
   letter_opener
   letter_opener_web
   mysql2 (~> 0.5)
+  pg (~> 1.4)
   pry
   pry-byebug
   puma (>= 5.0)

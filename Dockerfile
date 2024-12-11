@@ -2,7 +2,7 @@ FROM ruby:3.0.3
 
 
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs default-mysql-client
-
+RUN apt-get update && apt-get install -y postgresql-client
 
 ENV APP_PATH /myapp
 
@@ -30,5 +30,6 @@ RUN ln -s /usr/local/bundle/bin/rails /usr/local/bin/rails
 # Add bin directory to the PATH
 ENV PATH="/rails/bin:${PATH}"
 
-
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# ENTRYPOINTとCMDを明示的に設定
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]

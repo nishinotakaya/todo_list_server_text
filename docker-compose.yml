@@ -9,7 +9,7 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     ports:
-      - 3331:3306
+      - 3335:3306
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
   postgres_db:
@@ -23,7 +23,6 @@ services:
       - postgres-data:/var/lib/postgresql/data
     ports:
       - 5432:5432
-    command: postgres -c 'config_file=/etc/postgresql/postgresql.conf'
 
   api:
     build:
