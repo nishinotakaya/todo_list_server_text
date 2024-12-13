@@ -2,7 +2,15 @@ class Api::V1::TodosController < ApplicationController
   before_action :set_todo, only: [:update, :destroy]
 
   def index
-    @todos = Todo.order(:sort)
+    # デバッグ用にログを追加
+    Rails.logger.debug "Current User: #{current_user.inspect}"
+    Rails.logger.debug "Auth Headers: #{request.headers['Authorization']}"
+
+    if current_user.present?
+      @todos = current_user.todos.order(:sort)
+    else
+      @todos = Todo.order(:sort)
+    end
     render json: @todos
   end
 

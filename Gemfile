@@ -7,11 +7,8 @@ ruby "3.0.3"
 gem 'devise'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.4"
-
+gem 'devise_token_auth'
 # Use mysql as the database for Active Record
-gem "mysql2", "~> 0.5"
-
-gem 'rack-cors'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -47,10 +44,12 @@ gem "bootsnap", require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 gem "rack-cors"
 
-gem "pg", "~> 1.1", group: :production
-
+group :production do
+  gem 'pg', '~> 1.4'
+end
 
 group :development, :test do
+  gem "mysql2", "~> 0.5"
   gem "pry"
   gem "pry-byebug"
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ]

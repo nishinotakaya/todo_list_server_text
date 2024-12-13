@@ -3,26 +3,51 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'proaka-backend--server'
+app = "todo-list-text"
 primary_region = 'nrt'
 console_command = '/rails/bin/rails console'
+
+[env]
+  DATABASE_URL = "postgres://postgres:DP0UGAH8pw6pi0j@todo-list-text-pg.internal:5432/todo_list_text_production"
+  ALLOWED_ORIGINS = "https://todo-list-text.fly.dev, https://react-proaka-front.fly.dev"
+  RAILS_ENV = "production"
 
 [build]
 
 [http_service]
   internal_port = 3000
   force_https = true
-  auto_stop_machines = 'stop'
+  auto_stop_machines = false
   auto_start_machines = true
-  min_machines_running = 0
+  min_machines_running = 1
   processes = ['app']
 
 [[vm]]
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
-[mounts]
-  source = "pg_data"  # 正しいボリューム名を指定
-  destination = "/var/lib/postgresql/data"
 
+[[services.ports]]
+  port = 80
+  handlers = ["http"]
+  force_https = true
 
+[[services.ports]]
+  port = 443
+  handlers = ["tls", "http"]
+
+[[services.http_checks]]
+  interval = "15s"     # 間隔を長めに
+  timeout = "5s"       # タイムアウトを長めに
+  grace_period = "30s" # 起動時の猶予期間を長めに
+  method = "get"
+  path = "/health"     # ヘルスチェック用のエンドポイント
+  protocol = "http"
+
+[services.concurrency]
+  hard_limit = 25
+  soft_limit = 20
+  type = "connections"
+
+[deploy]
+  release_command = "bundle exec rails db:migrate"
